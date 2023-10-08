@@ -1,39 +1,44 @@
 ﻿
-Random random = new Random();
-int randomNumber = random.Next(1, 11);
-
-int maxAttempts = 3;
-
-Console.WriteLine("Welcome to the Number Guessing Game!");
-Console.WriteLine("You have " + maxAttempts + " attempts to guess the number.");
-
-for (int attempts = 1; attempts <= maxAttempts; attempts++)
+Console.Write("Enter the size of the array (N): ");
+if (int.TryParse(Console.ReadLine(), out int n) && n > 0)
 {
-    Console.Write("Attempt " + attempts + ": Enter a number between 1 and 10(included): ");
+    int[] arr = new int[n];
 
-    if (int.TryParse(Console.ReadLine(), out int userNumber))
+    for (int i = 0; i < n; i++)
     {
-        if (userNumber >= 1 && userNumber <= 10)
+        Console.Write($"Enter element {i + 1}: ");
+        if (int.TryParse(Console.ReadLine(), out int element))
         {
-            if (userNumber == randomNumber)
-            {
-                Console.WriteLine("Congratulations! You guessed the correct number!");
-                return;
-            }
-            else
-            {
-                Console.WriteLine("Sorry, that's not the correct number.");
-            }
+            arr[i] = element;
         }
         else
         {
-            Console.WriteLine("Please enter a number between 1 and 10.");
+            Console.WriteLine("Invalid input. Please enter a valid natural number.");
+            i--;
         }
     }
-    else
+
+    // Sort the array 
+    for (int i = 0; i < n - 1; i++)
     {
-        Console.WriteLine("Invalid input. Please enter a valid number.");
+        for (int j = i + 1; j < n; j++)
+        {
+            if (arr[i] > arr[j])
+            {
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+
+    Console.WriteLine("\nSorted array in ascending order:");
+    foreach (int item in arr)
+    {
+        Console.Write(item + " ");
     }
 }
-
-Console.WriteLine("Sorry, you didn't guess the number.");
+else
+{
+    Console.WriteLine("Invalid input for array size. Please enter a positive integer.");
+}
