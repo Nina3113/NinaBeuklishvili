@@ -1,39 +1,62 @@
 ﻿
-Random random = new Random();
-int randomNumber = random.Next(1, 11);
 
-int maxAttempts = 3;
-
-Console.WriteLine("Welcome to the Number Guessing Game!");
-Console.WriteLine("You have " + maxAttempts + " attempts to guess the number.");
-
-for (int attempts = 1; attempts <= maxAttempts; attempts++)
+Console.Write("Enter the size of the first array (N1): ");
+if (int.TryParse(Console.ReadLine(), out int n1) && n1 > 0)
 {
-    Console.Write("Attempt " + attempts + ": Enter a number between 1 and 10(included): ");
+    string[] firstArray = new string[n1];
 
-    if (int.TryParse(Console.ReadLine(), out int userNumber))
+    Console.WriteLine("Enter elements for the first array:");
+    for (int i = 0; i < n1; i++)
     {
-        if (userNumber >= 1 && userNumber <= 10)
+        Console.Write($"Element {i + 1}: ");
+        firstArray[i] = Console.ReadLine();
+    }
+
+
+    Console.Write("\nEnter the size of the second array (N2): ");
+    if (int.TryParse(Console.ReadLine(), out int n2) && n2 > 0)
+    {
+        string[] secondArray = new string[n2];
+
+        Console.WriteLine("Enter elements for the second array:");
+        for (int i = 0; i < n2; i++)
         {
-            if (userNumber == randomNumber)
+            Console.Write($"Element {i + 1}: ");
+            secondArray[i] = Console.ReadLine();
+        }
+
+        // Combine the arrays 
+        string[] combinedArray = new string[n1 + n2];
+        int combinedIndex = 0;
+
+        for (int i = 0; i < Math.Max(n1, n2); i++)
+        {
+            if (i < n1)
             {
-                Console.WriteLine("Congratulations! You guessed the correct number!");
-                return;
+                combinedArray[combinedIndex] = firstArray[i];
+                combinedIndex++;
             }
-            else
+            if (i < n2)
             {
-                Console.WriteLine("Sorry, that's not the correct number.");
+                combinedArray[combinedIndex] = secondArray[i];
+                combinedIndex++;
             }
         }
-        else
+
+        // Print the concatenated array
+        Console.WriteLine("\nConcatenated array:");
+        foreach (string item in combinedArray)
         {
-            Console.WriteLine("Please enter a number between 1 and 10.");
+            Console.Write(item + " ");
         }
     }
     else
     {
-        Console.WriteLine("Invalid input. Please enter a valid number.");
+        Console.WriteLine("Invalid input for the size of the second array.");
     }
 }
+else
+{
+    Console.WriteLine("Invalid input for the size of the first array.");
+}
 
-Console.WriteLine("Sorry, you didn't guess the number.");
