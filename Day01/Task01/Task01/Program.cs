@@ -1,5 +1,4 @@
 ﻿
-
 Console.Write("Enter the size of the matrix (2 or 3): ");
 if (int.TryParse(Console.ReadLine(), out int size) && (size == 2 || size == 3))
 {
