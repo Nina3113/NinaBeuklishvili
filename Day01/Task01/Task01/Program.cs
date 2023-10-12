@@ -1,39 +1,23 @@
 ﻿
-Random random = new Random();
-int randomNumber = random.Next(1, 11);
+int[] array = { 435, 657, 432, 958, 767 };
+int index = 0;
 
-int maxAttempts = 3;
+int digitsSum = DigitsSumAtIndex(array, index);
+Console.WriteLine($"Sum of digits at index {index} is {digitsSum}");
 
-Console.WriteLine("Welcome to the Number Guessing Game!");
-Console.WriteLine("You have " + maxAttempts + " attempts to guess the number.");
-
-for (int attempts = 1; attempts <= maxAttempts; attempts++)
+static int DigitsSumAtIndex(int[] array, int index)
 {
-    Console.Write("Attempt " + attempts + ": Enter a number between 1 and 10(included): ");
+    if (index < 0 || index >= array.Length)
+    {
+        throw new ArgumentOutOfRangeException("The index is out of range");
+    }
+    int number = array[index];
+    int sum = 0;
 
-    if (int.TryParse(Console.ReadLine(), out int userNumber))
+    while (number > 0)
     {
-        if (userNumber >= 1 && userNumber <= 10)
-        {
-            if (userNumber == randomNumber)
-            {
-                Console.WriteLine("Congratulations! You guessed the correct number!");
-                return;
-            }
-            else
-            {
-                Console.WriteLine("Sorry, that's not the correct number.");
-            }
-        }
-        else
-        {
-            Console.WriteLine("Please enter a number between 1 and 10.");
-        }
+        sum += number % 10;
+        number /= 10;
     }
-    else
-    {
-        Console.WriteLine("Invalid input. Please enter a valid number.");
-    }
+    return sum;
 }
-
-Console.WriteLine("Sorry, you didn't guess the number.");
