@@ -1,39 +1,57 @@
 ﻿
-Random random = new Random();
-int randomNumber = random.Next(1, 11);
 
-int maxAttempts = 3;
+char[] array = GetCharArray();
+char symbol = 'a';
+int symbolNum = SymbolCount(array, symbol);
+PrintResult(symbol, symbolNum);
 
-Console.WriteLine("Welcome to the Number Guessing Game!");
-Console.WriteLine("You have " + maxAttempts + " attempts to guess the number.");
-
-for (int attempts = 1; attempts <= maxAttempts; attempts++)
+//Get a char array from the user
+char[] GetCharArray()
 {
-    Console.Write("Attempt " + attempts + ": Enter a number between 1 and 10(included): ");
+    Console.WriteLine("Enter the size of an array: ");
 
-    if (int.TryParse(Console.ReadLine(), out int userNumber))
+    if (int.TryParse(Console.ReadLine(), out int size) && size > 0)
     {
-        if (userNumber >= 1 && userNumber <= 10)
+        char[] array = new char[size];
+        for (int i = 0; i < size; i++)
         {
-            if (userNumber == randomNumber)
+            Console.WriteLine($"Enter a char at index {i}: ");
+            if (char.TryParse(Console.ReadLine(), out char symbol))
             {
-                Console.WriteLine("Congratulations! You guessed the correct number!");
-                return;
+                array[i] = symbol;
             }
             else
             {
-                Console.WriteLine("Sorry, that's not the correct number.");
+                Console.WriteLine("Invalid input. Please enter one character");
+                i--;
             }
         }
-        else
-        {
-            Console.WriteLine("Please enter a number between 1 and 10.");
-        }
+        return array;
     }
     else
     {
-        Console.WriteLine("Invalid input. Please enter a valid number.");
+        Console.WriteLine("Invalid size input. Please enter a positive integer.");
+        return null;
     }
 }
 
-Console.WriteLine("Sorry, you didn't guess the number.");
+int SymbolCount(char[] array, char c)
+{
+    int count = 0;
+    foreach (char ch in array)
+    {
+        if (array != null)
+        {
+            if (ch == c) count++;
+        }
+    }
+    return count;
+}
+
+void PrintResult(char ch, int num)
+{
+    Console.WriteLine($"Symbol \"{ch}\" was used {num} times");
+}
+
+
+
